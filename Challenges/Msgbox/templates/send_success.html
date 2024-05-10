@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Msgbox-Success</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-wrapper {
+            background-color: #fff;
+            width: 358px;
+            height: 350px;
+            border-radius: 15px;
+            padding: 0px 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .countdown {
+            font-size: 28px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .input-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 0;
+            padding: 10px;
+            border-bottom: 1px solid rgb(128, 125, 125);
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-item::placeholder {
+            text-transform: uppercase;
+        }
+
+        .btn {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 40px;
+            background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .msg {
+            text-align: right;
+            font-size: small;
+            color: crimson;
+        }
+
+        .sign-up {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        a {
+            text-decoration-line: none;
+            color: #abc1ee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <div class="header">Sent Successfully!</div>
+            <div class="countdown" id="countdown">3</div>
+            <p>Redirecting to <a href="/inbox">inbox</a> in <span id="redirectTimer">3</span> seconds...</p>
+            <p><a href="/send">Write another Letter</a></p>
+        </div>
+    </div>
+
+    <script>
+        var redirectTimer = 3;
+        var timer = setInterval(function() {
+            redirectTimer--;
+            document.getElementById('redirectTimer').textContent = redirectTimer;
+            document.getElementById('countdown').textContent = redirectTimer;
+            if (redirectTimer <= 0) {
+                clearInterval(timer);
+                window.location.href = '/inbox';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Msgbox-Compose</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 200px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #a6c1ee;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #fbc2eb;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Compose</h1>
+        <form action="/send" method="POST">
+            <label for="header">Header:</label>
+            <input type="text" id="header" name="header" required>
+
+            <label for="listener">To:</label>
+            <input type="text" id="listener" name="listener" required>
+
+            <label for="content">Content(⭐markdown supported!):</label>
+            <textarea id="content" name="content" required></textarea>
+
+            <input type="submit" class="btn" value="Send">
+        </form>
+            
+        <div class="back-link">
+            <a href="/outbox">Back to Outbox</a>
+        </div>
+    </div>
+</body>
+</html>
