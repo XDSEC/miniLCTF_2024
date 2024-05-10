@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Msgbox-Outbox</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .list-wrapper {
+            background-color: #fff;
+            width: 800px;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .inbox-link {
+            margin-top: 20px;
+        }
+
+        .inbox-link a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .inbox-link a:hover {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="list-wrapper">
+            <h1>Outbox</h1>
+            <ul>
+                {% for message in messages %}
+                <li>
+                    <strong>{{ message.header }}</strong>
+                    <p>To: {{ message.listener }}</p>
+                    <p>Date: {{ message.creation }}</p>
+                    <p>ID: <a href="/read?id={{ message.uid }}">{{ message.uid }}</a></p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="inbox-link">
+            <a href="/send">Send a Message</a>
+            </br>
+            <a href="/inbox">Inbox</a>
+            </br>
+            <a href="/logout">Sign Out</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+services:
+  mysqllllll:
+    # 运行起来的容器名称
+    container_name: mysqllllll
+    # 自定构建镜像的镜像名称和标签
+    image: springx.fun/mysql:5.7
+    # 构建镜像的配置
+    build:
+      # Dockerfile 所在路径
+      context: ./mysqllllll/
+      # 还可以指定其他参数
+    # 重启策略：除非用户主动停止，否则出错就一直重启
+    restart: unless-stopped
+    # 端口映射：宿主端口:容器端口
+    ports:
+      - 33066:3306
+    # 环境变量
+    environment:
+      MYSQL_DATABASE: shiro
+      MYSQL_ROOT_PASSWORD: super
+      TZ: Asia/Shanghai
+    # 映射：把必要数据映射到指定位置
+    volumes:
+      - ./mysqllllll/mysql/logs/:/logs/
+      - ./mysqllllll/mysql/data/:/var/lib/mysql/
+      - ./mysqllllll/db/:/docker-entrypoint-initdb.d/
+      - ./mysqllllll/mysql/conf.d/:/etc/mysql/conf.d/
+    # Docker 日志限制，否则会无限大，占据过多磁盘
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - oknetwork
+      
+  injections:
+    image: injections:0.1
+    build:
+  # Dockerfile 所在路径
+      context: ./InjectionS/
+    container_name: injections
+    restart: unless-stopped
+    volumes:
+      - ./InjectionS/data:/InjectionS/
+    ports:
+      - 8080:8080
+    networks:
+      - oknetwork
+networks:
+  oknetwork:

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Msgbox-Read</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .message p {
+            margin-bottom: 10px;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            color: #666;
+        }
+    </style>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'nonce-{{ nonce }}' cdn.jsdelivr.net;">
+</head>
+<body>
+    <div class="container">
+        <h1>Message</h1>
+        <div class="message">
+            <p><strong>From:</strong> {{ message.sender }}</p>
+            <p><strong>Date:</strong> {{ message.creation }}</p>
+            <p><strong>Header:</strong> {{ message.header }}</p>
+            <p><strong>Content:</strong></p>
+            <p id="content">{{ message.content | safe }}</p>
+        </div>
+        <div class="back-link">
+            <a href="/inbox">Back to Inbox</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script nonce="{{ nonce }}">
+        document.addEventListener('DOMContentLoaded', function() {
+            var content = document.getElementById('content');
+            content.innerHTML = marked.parse(content.textContent);
+        });
+    </script>
+</body>
+</html>
