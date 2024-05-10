@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+    <head>
+        <title>Msgbox-Sign Up</title>
+        <style>
+        * {
+        margin: 0;
+        padding: 0;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        .container {
+            height: 100%;
+            background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        }
+
+        .login-wrapper {
+            background-color: #fff;
+            width: 358px;
+            height: 588px;
+            border-radius: 15px;
+            padding: 0 50px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            padding: 81px;
+        }
+
+        .input-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 0;
+            padding: 10px;
+            border-bottom: 1px solid rgb(128, 125, 125);
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-item:placeholder {
+            text-transform: uppercase;
+        }
+
+        .btn {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 40px;
+            background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .msg {
+            text-align: right;
+            font-size: small;
+            color: crimson;
+        }
+
+        .sign-up {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        a {
+            text-decoration-line: none;
+            color: #abc1ee;
+        }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="login-wrapper">
+                <div class="header">Sign Up</div>
+                <div class="form-wrapper">
+                    <input type="text" name="username" placeholder="username" class="input-item">
+                    <input type="password" name="password" placeholder="password" class="input-item">
+                    <div class="btn" id="loginBtn">Sign Up</div>
+                </div>
+                <div class="msg">
+
+                </div>
+                <div class="sign-up">
+                    Already have an account?
+                    <a href="/login">Sign in</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var loginBtn = document.getElementById('loginBtn');
+                var form = document.querySelector('.form-wrapper');
+
+                form.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        loginBtn.click();
+                    }
+                });
+            });
+            document.getElementById('loginBtn').addEventListener('click', function() {
+            var username = document.getElementsByName('username')[0].value;
+            var password = document.getElementsByName('password')[0].value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/register', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            window.location.href = response.redirect;
+                        } else {
+                            console.log(response.msg);
+                            document.querySelector('.msg').textContent = response.msg;
+                        }
+                    } else {
+                        document.querySelector('.msg').textContent = 'backend offline';
+                    }
+                }
+            };
+            xhr.send('username=' + username + '&password=' + password);
+        });
+        </script>
+
+    </body>
+</html>

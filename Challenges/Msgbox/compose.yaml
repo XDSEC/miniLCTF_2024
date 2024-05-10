@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    build: .
+    restart: always
+    ports:
+      - "7745:5000"
+    environment:
+      - FLAG=flag{test}
+    depends_on:
+      - chrome
+    # command: python3 app.py
+  chrome:
+    image: selenium/standalone-chrome
+    container_name: chrome
+    ports:
+      - "4444:4444"
+    environment:
+      - SE_START_XVFB=false
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=3 # for test ...
+    shm_size: 2g

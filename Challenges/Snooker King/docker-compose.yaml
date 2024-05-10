@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  web-desktop:
+    build: .
+    restart: always
+    ports:
+      - "7744:80"
