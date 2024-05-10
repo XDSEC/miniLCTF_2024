@@ -1,0 +1,222 @@
+info:
+  contact: {}
+  license:
+    name: Apache 2.0
+  title: SmartParkingDBMS
+  version: "1.0"
+paths:
+  /account:
+    delete:
+      consumes:
+      - text/plain
+      description: Delete account endpoint
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "403":
+          description: Failure reasons
+          schema:
+            type: string
+      summary: Delete account
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Add new account endpoint, do not use weak pass or short username
+      parameters:
+      - description: Username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "403":
+          description: Failure reasons
+          schema:
+            type: string
+      summary: Add new account
+  /backup:
+    get:
+      consumes:
+      - text/plain
+      description: Send source file endpoint (requires authentication)
+      produces:
+      - application/octet-stream
+      responses: {}
+      summary: Send source code file
+  /captcha:
+    get:
+      consumes:
+      - text/plain
+      description: Generate new captcha endpoint
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+      summary: Generate new captcha
+  /login:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: User login endpoint
+      parameters:
+      - description: Username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: Captcha Key
+        in: formData
+        name: captcha_key
+        required: true
+        type: string
+      - description: Captcha Token
+        in: formData
+        name: captcha_token
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "403":
+          description: Failure reasons
+          schema:
+            type: string
+      summary: User login
+  /test:
+    post:
+      consumes:
+      - text/plain
+      description: Test template endpoint (requires authentication)
+      parameters:
+      - description: Template body
+        in: body
+        name: body
+        schema:
+          type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: When Success
+          schema:
+            type: string
+        "500":
+          description: Error
+          schema:
+            type: string
+      summary: Test template
+  /vehicleInfo:
+    delete:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Delete parking information endpoint
+      parameters:
+      - description: Parking ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "403":
+          description: Failure reasons
+          schema:
+            type: string
+      summary: Delete parking information
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Query parking information endpoint
+      parameters:
+      - description: Plate number
+        in: path
+        name: plate
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "403":
+          description: Failure reasons
+          schema:
+            type: string
+      summary: Query parking information
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Add new parking information endpoint
+      parameters:
+      - description: Driver ID
+        in: formData
+        name: driver_id
+        required: true
+        type: string
+      - description: Driver Name
+        in: formData
+        name: driver_name
+        required: true
+        type: string
+      - description: Plate Number
+        in: formData
+        name: plate
+        required: true
+        type: string
+      - description: Description
+        in: formData
+        name: describe
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "403":
+          description: Failure reasons
+          schema:
+            type: string
+      summary: Add new parking information
+swagger: "2.0"
