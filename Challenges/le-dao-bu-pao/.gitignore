@@ -1,0 +1,4 @@
+venv/
+# solution/
+*.tar
+platform-config

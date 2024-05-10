@@ -1,0 +1,13 @@
+{
+  "target": {
+    "chall": {
+      "dockerfile": "./Dockerfile",
+      "tags": ["minil2024-ledaobupao"]
+    }
+  },
+  "group": {
+    "default": {
+      "targets": ["chall"]
+    }
+  }
+}
