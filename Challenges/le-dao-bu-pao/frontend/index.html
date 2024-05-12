@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./bulma.min.css" />
+    <script defer src="./main.js"></script>
+    <script defer src="./alpine.min.js"></script>
+    <title>🤣🔪🙅🏃</title>
+  </head>
+  <body>
+    <div class="content container py-6 px-2">
+      <h1>🤣🔪🙅🏃</h1>
+
+      <div x-data="songlist" class="box">
+        <h3>🎵超智能🏃歌单推荐🎵~</h3>
+        <p>
+          正在为您播放：
+          <a :href="song.url" x-text="song.title"></a>
+        </p>
+        <button @click="randomSong" class="button is-small">不喜欢，换一首！</button>
+      </div>
+
+      <p>
+        你是一个
+        <ruby>月之森女子学院<rt>⚡Kvqvna⚡ Havirefvgl</rt></ruby> 的学生，你的校长为了防止你因当客服过度劳累，下班后打
+        <a href="https://maimai.sega.jp/">日本洗衣机</a>，打完之后每日被演奏没有键盘的春日影并忘记一切，还要同时冲国服
+        MyGO 活动和日服 25 时活动的榜，最后猝死死后肘不赢牢大，要求你每日🏃。
+      </p>
+      <p>
+        前面忘了，后面忘了，总之你🏃的记录被整天想着抹茶帕↓菲↑而饥不择食的
+        <ruby>要乐奈<rt>Fcbegf Qrcnegzrag</rt></ruby> 吃了，你现在要一次性🏃完一个学啊不 live
+        的量！🏃完没有奖励，🏃不完没有flag（
+      </p>
+      <div><img src="./anon.jpg" width="160px" /></div>
+
+      <h2>打卡需求</h2>
+      <ol>
+        <li>至少🏃 10 km；（没让你🏃 3 km * 40 已经够宽容了（大嘘</li>
+        <li>经过所有目标点；</li>
+        <li>两次汇报间的平均速度在 144 km/h（40m/s）以下；（♿代🏃（</li>
+        <li>总平均速度在 36 km/h（10m/s）以上。（冲刺！！！</li>
+      </ol>
+      <p>我们的服务器会检测你的🏃状态，确保你满足以下几点要求：</p>
+      <ol>
+        <li>每次上报的时间间隔不低于 1 秒，不超过 10 秒；</li>
+        <li>每次上报时的直线位移不超过 100 米。<s>（禁止使用传送魔法）</s></li>
+      </ol>
+      <p><s>至于怎么上报的，你都打 CTF 了不会自己看？</s></p>
+      <div><img src="./emu.jpg" width="160px" /></div>
+      <button x-data @click="startRunning" class="button is-primary" style="width: 160px">开始/重启记录</button>
+
+      <h2>当前状态</h2>
+      <div x-data>
+        <div x-show="!$store.startTime">
+          <p>🏃记录未开始</p>
+        </div>
+
+        <div x-show="$store.startTime">
+          <progress
+            :value="$store.status.data.distance"
+            value="0"
+            max="10000"
+            class="progress"
+            :class="$store.status.data.status == 'running' ? 'is-primary' : 'is-danger'"
+          ></progress>
+          <p>详细信息：</p>
+          <ul>
+            <li>
+              已🏃时间：<span
+                x-text="$store.position.timestamp && ($store.position.timestamp - $store.startTime) / 1000"
+              ></span>
+              秒
+            </li>
+            <li>
+              当前位置：<span x-text="$store.position.coords.latitude"></span>,
+              <span x-text="$store.position.coords.longitude"></span>
+            </li>
+            <li>已🏃距离：<span x-text="Math.round($store.status.data.distance)"></span> 米</li>
+            <li>剩余目标点数：<span x-text="$store.status.ckpts.length"></span></li>
+            <li>当前状态：<span x-text="$store.status.data.status"></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>你还需要经过的目标点</h2>
+      <ul x-data>
+        <template x-for="ckpt in $store.status.ckpts">
+          <li x-text="`${ckpt.label} (${ckpt.lat}, ${ckpt.lon})`"></li>
+        </template>
+      </ul>
+
+      <div x-data="anticheat" class="box has-background-warning has-text-black">
+        <h2>😡😡😡😡超超超超智能端侧反作弊数据显示器😡😡😡😡</h2>
+        <p>
+          <strong
+            >我们使用了业界😇遥遥领先😇的超智能反作弊算法😡，精准打击每一位认真🏃的，哦不是，是作弊的大祥😡，一旦被发现使用代步工具（如♿）和代🏃等作弊行为，🏃记录清零🤣！
+            <br />
+            所有数据均已加密处理（大嘘）请不要尝试使用歪门邪道（</strong
+          >
+        </p>
+        <p>📱加速度：<span x-text="accl.x"></span> <span x-text="accl.y"></span> <span x-text="accl.z"></span></p>
+        <p>
+          📱旋转速率：<span x-text="rot.alpha"></span> <span x-text="rot.beta"></span> <span x-text="rot.gamma"></span>
+        </p>
+        <p>刷新间隔：<span x-text="int"></span></p>
+        <p>什么？你在用电脑？那你肯定看不到上面的数据，此刻你的假跑行为已经被记录！走，跟我去自首！</p>
+        <p><strong>😡😡😡😡任何邪恶终将绳之以法😡😡😡😡</strong></p>
+      </div>
+
+      <h2>Flag</h2>
+      <p x-data x-text="$store.status.data.flag || '你先别急'"></p>
+    </div>
+  </body>
+</html>

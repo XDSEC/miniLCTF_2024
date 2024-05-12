@@ -1,0 +1,13 @@
+{
+  "target": {
+    "chall": {
+      "dockerfile": "./Dockerfile",
+      "tags": ["minil2024-minijail"]
+    }
+  },
+  "group": {
+    "default": {
+      "targets": ["chall"]
+    }
+  }
+}
