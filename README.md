@@ -1,11 +1,9 @@
-# Mini-L-CTF-2024
-
-> MiniL CTF 2024 WriteUp
+# MiniL CTF 2024
 
 Mini L CTF 2024 题目 官方题解 选手题解仓库
 
-- `WriteUps/<队名>` 参赛队伍的题解
-- `Official/` 官方题解
+- `Writeups/<队名>` 参赛队伍的题解
+- `OfficialWriteups/` 官方题解
 - `Challenges/` 题目文件
 
 ## 题解提交方式
