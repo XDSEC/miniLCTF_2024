@@ -122,8 +122,6 @@ print(flag,end=" ")
 
 ### Long long call
 
-### WriteUp
-
 一、总体思路
 
 re签到题，重点在于添加了一系列垃圾指令，分散了实际函数逻辑。这个混淆方法的大致原理可以看[这篇](https://blog.dx39061.top/2022/12/利用返回地址进行ret跳转的简单控制流混淆/)，唯一的修改是这次在最后插入了`leave ret` 指令，使IDA错误地识别成一个个嵌套的函数。预期做法是写IDAPython脚本去除垃圾指令，最后F5即可看见加密逻辑，这种方法可以看`maet radiv` 队伍的wp，写得很清楚了。但这道题作为签到，并没有写复杂的逻辑，其实纯调试也能看出来异或的逻辑，并且很多队伍都是这么做的。
@@ -200,45 +198,6 @@ sub_2DFB9C(v44);
 
 找CryptoClass，发现AES
 解密即可
-### Long long call
-一、总体思路
-re签到题，重点在于添加了一系列垃圾指令，分散了实际函数逻辑。这个混淆方法的大致原理可以看这篇，唯一的修改是这次在最后插入了leave ret 指令，使IDA错误地识别成一个个嵌套的函数。预期做法是写IDAPython脚本去除垃圾指令，最后F5即可看见加密逻辑，这种方法可以看maet radiv 队伍的wp，写得很清楚了。但这道题作为签到，并没有写复杂的逻辑，其实纯调试也能看出来异或的逻辑，并且很多队伍都是这么做的。
-二、细节要点
-1. 反调试
-   LD_PRELOAD检测：之所以有这个点，其实是因为在check逻辑里每check一位，程序就会sleep一段时间。当时想可能会有师傅用LD_PRELOAD hook掉sleep，但是题目太简单了，好像也没有队伍在意这个点。
-   TracePid反调试：ELF文件最基本的反调试手段之一，这个就很常规了，也很好绕过，直接patch或者改返回值都行。
-2. 加密逻辑：
-   处理掉垃圾指令或者直接调试应该比较容易看出来，这里直接放我的源码了：
-```python
-from z3 import *
-import copy
-
-enc = [187, 191, 185, 190, 195, 204, 206, 220, 158, 143, 157,
-       155, 167, 140, 215, 149, 176, 173, 189, 180, 136, 175,
-       146, 208, 207, 161, 163, 146, 183, 180, 201, 158, 148,
-       167, 174, 240, 161, 153, 192, 227, 180, 180, 191, 227]
-
-s = Solver()
-
-input = [BitVec(f'input[{i}]', 8) for i in range(44)]
-input_ref = copy.deepcopy(input)
-
-for i in range(0, 43, 2):
-    x = (input[i] + input[i+1]) & 0xff
-    input[i] = input[i] ^ x
-    input[i] &= 0xff
-    input[i+1] = input[i+1] ^ x
-    input[i+1] &= 0xff
-
-for i in range(44):
-    s.add(input[i] == enc[i])
-
-s.check()
-m = s.model()
-flag = "".join(chr(m[input_ref[i]].as_long()) for i in range(len(m)))
-print(flag)
-```
-
 
 ### OLLessVM && OBF_REVENGE
 不是Ollvm，只是一个基于块的混淆
